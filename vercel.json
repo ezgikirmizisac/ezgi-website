@@ -1,44 +1,28 @@
-
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "server.js",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "public/**",
-        "use": "@vercel/static"
-  "version": 2,
-  "builds": [
+  "services": [
     {
-      "src": "server.js",
-      "use": "@vercel/node"
+      "name": "web",
+      "type": "web",
+      "env": "production",
+      "buildCommand": "npm install",
+      "startCommand": "node server.js",
+      "routes": [
+        {
+          "src": "/(.*)",
+          "dest": "/server.js"
+        }
+      ]
     },
     {
-      "src": "public/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "^/(.*)$",
-      "dest": "/server.js"
-    },
-    {
-      "src": "^http://(.*)$",
-      "status": 301,
-      "headers": {
-        "Location": "https://ezgik.co/$1"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/server.js"
-      }
-    ]
-  }
+      "name": "static",
+      "type": "static",
+      "env": "production",
+      "routes": [
+        {
+          "src": "/(.*)",
+          "dest": "/public/$1"
+        }
+      ]
     }
   ]
 }
